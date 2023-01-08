@@ -13,6 +13,9 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   command = "set iminsert=0",
 })
 
+vim.o.autoread = true
+vim.o.updatetime = 1000
+
 return {
   opt = {
     -- set to true or false etc.
