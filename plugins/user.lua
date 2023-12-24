@@ -32,6 +32,50 @@ telescope.setup {
   },
 }
 
+-- require("mason-nvim-dap").setup {
+--   ensure_installed = { "delve", "go-debug-adapter" },
+--   automatic_installation = true, -- 自動インストールを有効にする
+--   handlers = {
+--     delve = function(config) -- 'go'キーでGo言語のハンドラーを追加
+--       -- DAPアダプター設定
+--       config.adapters = {
+--         type = "server", -- サーバータイプのアダプターを使用
+--         host = "127.0.0.1", -- Delveサーバーのホストアドレス
+--         port = 2345, -- Delveサーバーのポート
+--       }
+--
+--       -- DAP設定
+--       config.configurations = {
+--         {
+--           type = "delve",
+--           name = "Attach to Process",
+--           mode = "local",
+--           request = "attach",
+--           remotePath = "${workspaceFolder}", -- リモートのワークスペースパス
+--           port = 2345, -- Delveサーバーのポート
+--           host = "127.0.0.1", -- Delveサーバーのホストアドレス
+--         },
+--         {
+--           type = "delve",
+--           name = "Debug",
+--           request = "launch",
+--           program = "${file}", -- 現在のファイルをデバッグ
+--         },
+--         {
+--           type = "delve",
+--           name = "Debug test",
+--           request = "launch",
+--           mode = "test",
+--           program = "${file}",
+--         },
+--       }
+
+-- デフォルトの設定を適用
+-- require("mason-nvim-dap").default_setup(config)
+--     end,
+--   },
+-- }
+
 return {
   -- You can also add new plugins here as well:
   -- Add plugins, the lazy syntax
@@ -115,5 +159,99 @@ return {
   {
     "sindrets/diffview.nvim",
     event = "BufReadPost",
+  },
+  {
+    "akinsho/git-conflict.nvim",
+    version = "*",
+    config = true,
+  },
+  {
+    "echasnovski/mini.nvim",
+    version = false,
+    lazy = false,
+    config = function()
+      vim.api.nvim_create_autocmd({ "InsertEnter" }, {
+        pattern = "*",
+        callback = function()
+          -- comment
+          require("mini.comment").setup {}
+          -- splitjoin
+          require("mini.splitjoin").setup {}
+          -- surround
+          require("mini.surround").setup {
+            mappings = {
+              add = "sa",
+              delete = "sd",
+              find = "sf",
+              find_left = "sF",
+              highlight = "sh",
+              replace = "sc",
+              update_n_lines = "sn",
+              suffix_last = "l",
+              suffix_next = "n",
+            },
+          }
+        end,
+        once = true,
+      })
+
+      -- hipatterns
+      local hipatterns = require "mini.hipatterns"
+      hipatterns.setup {
+        highlighters = {
+          fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+          hack = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      }
+    end,
+  },
+  {
+    "rhysd/git-messenger.vim",
+    cmd = "GitMessenger",
+    lazy = false,
+    config = function()
+      keymap("n", "<Leader>gm", "<CMD>GitMessenger<CR>", { desc = "Show git blame on the current line" })
+      vim.g.git_messenger_floating_win_opts = { border = "single" }
+    end,
+  },
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    opts = {
+      handlers = {
+        delve = function(config)
+          local port = 2345
+          config.adapters = {
+            -- delve = {
+            type = "server",
+            host = "localhost",
+            port = port,
+            -- command = vim.fn.stdpath "data" .. "/mason/bin/dlv",
+            -- args = { "dap", "-l", "127.0.0.1:" .. port },
+            -- },
+          }
+          -- local dap = require "dap"
+          -- dap.adapters.delve = {
+          --   type = "server",
+          -- port = "${port}",
+          -- port = port,
+          -- }
+          config.configurations = vim.list_extend(config.configurations or {}, {
+            {
+              type = "delve",
+              name = "Delve: Remote",
+              mode = "remote",
+              remotePath = "",
+              request = "attach",
+              host = "localhost",
+              cwd = "${workspaceRoot}",
+              port = port,
+            },
+          })
+          require("mason-nvim-dap").default_setup(config)
+        end,
+      },
+    },
   },
 }
