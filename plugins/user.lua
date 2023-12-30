@@ -86,4 +86,16 @@ return {
       },
     },
   },
+  {
+    "vim-skk/eskk.vim",
+    config = function()
+      vim.g["eskk#directory"] = "~/.cache/dein/repos/github.com/tyru/eskk.vim"
+      vim.g["eskk#dictionary"] = { path = "~/.skk_jisyo", sorted = 1, encoding = "utf-8" }
+      vim.g["eskk#large_dictionary"] = {
+        path = "~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.L",
+        sorted = 1,
+        encoding = "euc-jp",
+      }
+    end,
+  },
 }
