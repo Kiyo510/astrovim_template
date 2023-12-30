@@ -107,4 +107,10 @@ return {
       -- require("core.mappings").neoformat()
     end,
   },
+  {
+    "mg979/vim-visual-multi",
+    event = "BufReadPost",
+    -- setup = function() require "custom.configs.visual-multi" end,
+  },
+  {
 }
