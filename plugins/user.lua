@@ -113,4 +113,7 @@ return {
     -- setup = function() require "custom.configs.visual-multi" end,
   },
   {
+    "sindrets/diffview.nvim",
+    event = "BufReadPost",
+  },
 }
