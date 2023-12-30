@@ -31,7 +31,23 @@ return {
     -- this is useful for naming menus
     ["<leader>b"] = { name = "Buffers" },
     -- quick save
-    -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+    -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command    -- vim-visual-multi
+    -- ["<A-k>"] = { "<cmd>call vm#commands#add_cursor_up(0, v:count1)<CR>" },
+
+    -- git diff vieww
+    ["gdo"] = { "<cmd>DiffviewOpen<CR>", desc = "Open Diffview" },
+    ["gdc"] = { "<cmd>DiffviewClose<CR>", desc = "Close Diffview" },
+    ["gdf"] = { "<cmd>DiffviewFileHistory<CR>", desc = "Open DiffviewFileHistory" },
+
+    -- git conflict
+    ["gco"] = { "<cmd>GitConflictChooseOurs<CR>", desc = "Git Conflict Choose Ours" },
+    ["gct"] = { "<cmd>GitConflictChooseTheirs<CR>", desc = "Git Conflict Choose Theirs" },
+    ["gcB"] = { "<cmd>GitConflictChooseBase<CR>", desc = "Git Conflict Choose Base" },
+    ["gcb"] = { "<cmd>GitConflictChooseBoth<CR>", desc = "Git Conflict Choose Both" },
+    ["gcn"] = { "<cmd>GitConflictChooseNone<CR>", desc = "Git Conflict Choose None" },
+    ["gcj"] = { "<cmd>GitConflictNextConflict<CR>", desc = "Git Conflict Next Conflict" },
+    ["gck"] = { "<cmd>GitConflictPrevConflict<CR>", desc = "Git Conflict Prev Conflict" },
+    ["gcq"] = { "<cmd>GitConflictListQf<CR>", desc = "Git Conflict List Qf" },
   },
   t = {
     -- setting a mapping to false will disable it
