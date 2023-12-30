@@ -98,4 +98,13 @@ return {
       }
     end,
   },
+  {
+    "sbdchd/neoformat",
+    -- disable = not plugin_status.neoformat,
+    cmd = "Neoformat",
+    setup = function()
+      -- vim.g.neoformat_enabled_go = { "gofmt", "goimports" }
+      -- require("core.mappings").neoformat()
+    end,
+  },
 }
