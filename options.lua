@@ -1,10 +1,16 @@
 -- set vim options here (vim.<first_key>.<second_key> = value)
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = {
     format = function(diagnostic)
-      return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
+      return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
     end,
   },
+})
+
+-- ノーマルモードに入る際にIMEを無効化する
+vim.api.nvim_create_autocmd("InsertLeave", {
+  pattern = "*",
+  command = "set iminsert=0",
 })
 
 return {
